@@ -1,0 +1,68 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import styled from "styled-components";
+
+function Initial() {
+    
+    const [movies, setMovies] = useState([]);
+
+    useEffect((() => {
+        const promise = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies');
+
+        promise.then(response => setMovies([...response.data]));
+    }), []);
+
+    return(
+        <>
+            <Text>Selecione o filme</Text>
+            <UL>
+                {movies.map(movie =>
+                    <Link to={`/sessoes/${movie.id}`}>
+                        <LI><img src={movie.posterURL} alt="" /></LI>
+                    </Link>
+                )}
+            </UL>
+        </>
+        
+    );
+}
+
+export default Initial;
+
+const Text = styled.h2`
+    font-size: 24px;
+    color: #293845;
+    letter-spacing: 0.04em;
+
+    margin: 40px 0;
+
+    text-align: center;
+`;
+
+const UL = styled.ul`
+    width: 100%;
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+`;
+
+const LI = styled.li`
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    cursor: pointer;
+    
+    width: 145px;
+    height: 210px;
+    margin: 0 10px;
+    margin-bottom: 15px;
+    padding: 8px;
+
+    img {
+        width: 129px;
+        height: 193px;
+    }
+`;
