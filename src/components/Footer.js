@@ -1,17 +1,21 @@
 import styled from "styled-components";
 
-function Footer({ movie }) {
+function Footer({ movie, day, hour }) {
     return(
-        <DivFooter>
+        <Div>
             <img src={movie.posterURL} alt="" />
-            <h4>{movie.title}</h4>
-        </DivFooter>
+            <Texts>
+                <h4>{movie.title}</h4>
+                <h4>{day.weekday} - {hour}</h4>
+            </Texts>
+            
+        </Div>
     );
 }
 
 export default Footer;
 
-const DivFooter = styled.div`
+const Div = styled.div`
     background-color: #DFE6ED;
     border-top: 1px solid #9EADBA;
     
@@ -34,9 +38,16 @@ const DivFooter = styled.div`
         padding: 4px;
         margin: 0 10px;
     }
+`;
 
-    h4 {
+const Texts = styled.div`
+  display: flex;
+  flex-direction: column;
+  
+  h4 {
         font-size: 22px;
         color: #293845;
+
+        margin-top: 3px;
     }
 `;

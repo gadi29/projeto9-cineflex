@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import Footer from "./Footer";
 
 function Seat({ seat, setSelectedSeats, selectedSeats }) {
     const [selecionado, setSelecionado] = useState(false);
@@ -29,6 +30,7 @@ function Seats() {
     const [seats, setSeats] = useState([]);
     const [day, setDay] = useState({});
     const [movie, setMovie] = useState({});
+    const [hour, setHour] = useState('');
     const [name, setName] = useState('');
     const [cpf, setCpf] = useState('');
     const [selectedSeats, setSelectedSeats] = useState([]);
@@ -39,6 +41,7 @@ function Seats() {
         promise.then(response => {
             setDay(response.data.day);
             setMovie(response.data.movie);
+            setHour(response.data.name);
             setSeats([...response.data.seats]);
         });
     }), []);
@@ -92,6 +95,7 @@ function Seats() {
                     <Button type="submit">Reservar assento(s)</Button>
                 </Link>
             </Form>
+            <Footer day={day} movie={movie} hour={hour} />
         </>
     );
 }
@@ -167,13 +171,13 @@ const LIlegenda = styled(LI)`
 
 const Form = styled.form`
     margin: 0 24px;
-    margin-top: 55px;
+    margin-top: 38px;
 
     position: relative;
 `;
 
 const DivForms = styled.div`
-    margin: 22px 0;
+    margin: 18px 0;
     
     display: flex;
     flex-direction: column;
@@ -210,7 +214,7 @@ const Button = styled.button`
     
     width: 225px;
     height: 42px;
-    margin-top: 42px;
+    margin-top: 32px;
 
     position: absolute;
     left: 50%;
