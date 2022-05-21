@@ -2,29 +2,32 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import Loading from "./Loading";
 
 function Initial() {
-    
+
     const [movies, setMovies] = useState([]);
+    const [load, setLoad] = useState(true);
 
     useEffect((() => {
         const promise = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies');
 
-        promise.then(response => setMovies([...response.data]));
+        promise.then(response => {setMovies([...response.data]); setLoad(false)});
     }), []);
 
-    return(
+    return (
         <>
             <Text>Selecione o filme</Text>
+            {load ? <Loading /> : 
             <UL>
-                {movies.map(movie =>
+                {movies.map((movie, index) =>
                     <Link to={`/sessoes/${movie.id}`}>
-                        <LI><img src={movie.posterURL} alt="" /></LI>
+                        <LI key={index}><img src={movie.posterURL} alt="" /></LI>
                     </Link>
                 )}
-            </UL>
+            </UL>}
         </>
-        
+
     );
 }
 

@@ -2,24 +2,26 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import Loading from "./Loading";
 
-function Day({ weekday, date, showtimes }) {
+function Day({ weekday, date, showtimes, index }) {
     const showtimesArray = [...showtimes];
-    
+
     return (
-        <Block>
+        <Block key={index}>
             <TextH3>{weekday} - {date}</TextH3>
-            {showtimesArray.map(hour => 
-            <Link to={`/assentos/${hour.id}`}>
-                <Button>{hour.name}</Button>
-            </Link>)}
+            {showtimesArray.map((hour, indexH) =>
+                <Link to={`/assentos/${hour.id}`}>
+                    <Button key={indexH}>{hour.name}</Button>
+                </Link>)}
         </Block>
     );
 }
 
 function Session() {
-    
+
     const { idFilme } = useParams();
+    const [load, setLoad] = useState(true);
     const [movie, setMovie] = useState([]);
     const [sessions, setSessions] = useState([]);
 
@@ -27,15 +29,18 @@ function Session() {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`);
 
         promise.then(response => {
+            setLoad(false);
             setMovie(response.data);
             setSessions([...response.data.days]);
         });
     }), []);
-    
-    return(
+
+    return (
         <Container>
             <TextH2>Selecione o horário</TextH2>
-            {sessions.map(session => <Day weekday={session.weekday} date={session.date} showtimes={session.showtimes}/>)}
+            {load ? <Loading /> :
+                <> {sessions.map((session, index) => <Day index={index} weekday={session.weekday} date={session.date} showtimes={session.showtimes} />)}
+                </>}
             <DivFooter>
                 <img src={movie.posterURL} alt="" />
                 <h4>{movie.title}</h4>
