@@ -29,7 +29,9 @@ function Seat({ seatName, setSeatName, seat, setSelectedSeats, selectedSeats, in
     );
 }
 
-function Seats() {
+function Seats({ setTurnBack, turnBack }) {
+
+    if(!turnBack) setTurnBack(true);
 
     const { idSessao } = useParams();
     const navigate = useNavigate();

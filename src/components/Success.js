@@ -2,9 +2,16 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { useLocation } from "react-router-dom";
  
-function Success() {
+function Success({ setTurnBack, turnBack }) {
+
+    if(!turnBack) setTurnBack(true);
+
     const { state } = useLocation();
+
     const seats = [...state.seats];
+    const seats1 = seats.map(seat=>Number(seat));
+    seats1.sort((x, y) => x - y);
+    
     let CPF = state.cpf.split(/[.-]+/);
     CPF = CPF.join('');
     let CPFfinal = CPF.match(/.{1,3}/g).join(".").replace(/\.(?=[^.]*$)/,"-");
@@ -16,13 +23,13 @@ function Success() {
             <TextH4>{state.movie}</TextH4>
             <TextH4>{state.day} - {state.hour}</TextH4>
             <TextH3>Ingressos</TextH3>
-            {seats.map((seat, index)=> <TextH4 key={index}>Assento {seat}</TextH4>)}
+            {seats1.map((seat, index)=> <TextH4 key={index}>Assento {seat}</TextH4>)}
             <TextH3>Comprador</TextH3>
             <TextH4>Nome: {state.name}</TextH4>
             <TextH4>CPF: {CPFfinal}</TextH4>
             <Div>
                 <Link to={'/'}>
-                    <button onClick={() => sessionStorage.clear()}>Voltar para Home</button>
+                    <button>Voltar para Home</button>
                 </Link>
             </Div>
         </>

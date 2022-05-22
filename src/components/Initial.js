@@ -4,12 +4,12 @@ import axios from "axios";
 import styled from "styled-components";
 import Loading from "./Loading";
 
-function Initial({ setTurnBack }) {
+function Initial({ setTurnBack, turnBack }) {
 
     const [movies, setMovies] = useState([]);
     const [load, setLoad] = useState(true);
 
-    setTurnBack(false);
+    if (turnBack) setTurnBack(false);
 
     useEffect((() => {
         const promise = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies');
@@ -23,7 +23,7 @@ function Initial({ setTurnBack }) {
             {load ? <Loading /> : 
             <UL>
                 {movies.map((movie, index) =>
-                    <Link key={index} to={`/sessoes/${movie.id}`}>
+                    <Link key={index} to={{ pathname:`/sessoes/${movie.id}` }}>
                         <LI key={index}><img src={movie.posterURL} alt="" /></LI>
                     </Link>
                 )}

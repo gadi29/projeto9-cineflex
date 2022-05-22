@@ -7,16 +7,17 @@ import Seats from "./Seats";
 import Success from "./Success";
 
 function App() {
+  
   const [turnBack, setTurnBack] = useState(false);
   
   return (
     <BrowserRouter>
       <Header turnBack={turnBack} />
       <Routes>
-        <Route path={"/"} element={<Initial setTurnBack={setTurnBack} />}/>
-        <Route path={"/sessoes/:idFilme"} element={<Session setTurnBack={setTurnBack} />}/>
-        <Route path={"/assentos/:idSessao"} element={<Seats />}/>
-        <Route path={"/sucesso"} element={<Success />}/>
+        <Route path={"/"} element={<Initial turnBack={turnBack} setTurnBack={setTurnBack} />}/>
+        <Route path={"/sessoes/:idFilme"} element={<Session turnBack={turnBack} setTurnBack={setTurnBack} />}/>
+        <Route path={"/assentos/:idSessao"} element={<Seats turnBack={turnBack} setTurnBack={setTurnBack} />}/>
+        <Route path={"/sucesso"} element={<Success turnBack={turnBack} setTurnBack={setTurnBack} />}/>
       </Routes>
     </BrowserRouter>
   );

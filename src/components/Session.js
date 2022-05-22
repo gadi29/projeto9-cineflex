@@ -18,9 +18,9 @@ function Day({ weekday, date, showtimes, index }) {
     );
 }
 
-function Session({ setTurnBack }) {
+function Session({ setTurnBack, turnBack }) {
 
-    setTurnBack(true);
+    if(!turnBack) setTurnBack(true);
 
     const { idFilme } = useParams();
     const [load, setLoad] = useState(true);
