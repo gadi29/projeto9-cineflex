@@ -16,13 +16,13 @@ function Success() {
             <TextH4>{state.movie}</TextH4>
             <TextH4>{state.day} - {state.hour}</TextH4>
             <TextH3>Ingressos</TextH3>
-            {seats.map(seat => <TextH4>Assento {seat}</TextH4>)}
+            {seats.map((seat, index)=> <TextH4 key={index}>Assento {seat}</TextH4>)}
             <TextH3>Comprador</TextH3>
             <TextH4>Nome: {state.name}</TextH4>
             <TextH4>CPF: {CPFfinal}</TextH4>
             <Div>
                 <Link to={'/'}>
-                    <button>Voltar para Home</button>
+                    <button onClick={() => sessionStorage.clear()}>Voltar para Home</button>
                 </Link>
             </Div>
         </>
@@ -38,7 +38,7 @@ const TextH2 = styled.h2`
     letter-spacing: 0.04em;
 
     margin: 0 100px;
-    margin-top: 45px;
+    margin-top: 112px;
 
     text-align: center;
 `;

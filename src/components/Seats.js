@@ -80,7 +80,7 @@ function Seats() {
             <TextH2>Selecione o(s) assento(s)</TextH2>
             {load ? <Loading /> : 
             <UL>
-                {seats.map((seat, index) => <Seat seatName={seatName} setSeatName={setSeatName} index={index} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} seat={seat} />)}
+                {seats.map((seat, index) => <Seat key={index} seatName={seatName} setSeatName={setSeatName} index={index} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} seat={seat} />)}
             </UL>}
             <ULlegenda>
                 <DivLegenda>
@@ -117,7 +117,7 @@ const TextH2 = styled.h2`
     color: #293845;
     letter-spacing: 0.04em;
 
-    margin-top: 40px;
+    margin-top: 107px;
     margin-bottom: 18px;
 
     text-align: center;

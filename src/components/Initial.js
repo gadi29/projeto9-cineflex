@@ -4,10 +4,12 @@ import axios from "axios";
 import styled from "styled-components";
 import Loading from "./Loading";
 
-function Initial() {
+function Initial({ setTurnBack }) {
 
     const [movies, setMovies] = useState([]);
     const [load, setLoad] = useState(true);
+
+    setTurnBack(false);
 
     useEffect((() => {
         const promise = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies');
@@ -21,7 +23,7 @@ function Initial() {
             {load ? <Loading /> : 
             <UL>
                 {movies.map((movie, index) =>
-                    <Link to={`/sessoes/${movie.id}`}>
+                    <Link key={index} to={`/sessoes/${movie.id}`}>
                         <LI key={index}><img src={movie.posterURL} alt="" /></LI>
                     </Link>
                 )}
@@ -38,7 +40,8 @@ const Text = styled.h2`
     color: #293845;
     letter-spacing: 0.04em;
 
-    margin: 40px 0;
+    margin-top: 107px;
+    margin-bottom: 40px;
 
     text-align: center;
 `;

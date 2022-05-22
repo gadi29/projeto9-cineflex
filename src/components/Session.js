@@ -11,14 +11,16 @@ function Day({ weekday, date, showtimes, index }) {
         <Block key={index}>
             <TextH3>{weekday} - {date}</TextH3>
             {showtimesArray.map((hour, indexH) =>
-                <Link to={`/assentos/${hour.id}`}>
+                <Link key={indexH} to={`/assentos/${hour.id}`}>
                     <Button key={indexH}>{hour.name}</Button>
                 </Link>)}
         </Block>
     );
 }
 
-function Session() {
+function Session({ setTurnBack }) {
+
+    setTurnBack(true);
 
     const { idFilme } = useParams();
     const [load, setLoad] = useState(true);
@@ -39,7 +41,7 @@ function Session() {
         <Container>
             <TextH2>Selecione o horário</TextH2>
             {load ? <Loading /> :
-                <> {sessions.map((session, index) => <Day index={index} weekday={session.weekday} date={session.date} showtimes={session.showtimes} />)}
+                <> {sessions.map((session, index) => <Day key={index} index={index} weekday={session.weekday} date={session.date} showtimes={session.showtimes} />)}
                 </>}
             <DivFooter>
                 <img src={movie.posterURL} alt="" />
@@ -52,6 +54,7 @@ function Session() {
 export default Session;
 
 const Container = styled.div`
+    margin-top: 107px;
     margin-bottom: 110px;
 `;
 
