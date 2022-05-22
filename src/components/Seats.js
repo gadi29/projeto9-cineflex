@@ -55,7 +55,7 @@ function Seats({ setTurnBack, turnBack }) {
             setHour(response.data.name);
             setSeats([...response.data.seats]);
         });
-    }), []);
+    }), [idSessao]);
 
     function data(event){
         event.preventDefault();
@@ -70,11 +70,15 @@ function Seats({ setTurnBack, turnBack }) {
             CPF
         }
 
-        const promise = axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', body);
+        if (ids.length === 0) {
+            alert ('Você deve selecionar pelo menos um assento!')
+        } else {
+            const promise = axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', body);
     
-        promise.then(() => {
-            navigate('/sucesso', { state: { movie: movie.title, day: day.weekday, hour: hour, seats:[...seatName], name: name, cpf: cpf } });
-        });
+            promise.then(() => {
+                navigate('/sucesso', { state: { movie: movie.title, day: day.weekday, hour: hour, seats:[...seatName], name: name, cpf: cpf } });
+            });
+        }
     }
 
     return (
@@ -132,6 +136,7 @@ const TextH3 = styled.h3`
 `;
 
 const UL = styled.ul`
+    width: 340px;
     margin: 0 24px;
 
     display: flex;
@@ -182,6 +187,10 @@ const LIlegenda = styled(LI)`
 `;
 
 const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     form {
         margin: 0 24px;
         margin-top: 38px;
@@ -201,6 +210,7 @@ const Container = styled.div`
             border: 1px solid #D5D5D5;
             border-radius: 3px;
 
+            width: 340px;
             height: 50px;
             padding: 0 13px;
             margin-top: 4px;

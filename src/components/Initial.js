@@ -14,20 +14,22 @@ function Initial({ setTurnBack, turnBack }) {
     useEffect((() => {
         const promise = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies');
 
-        promise.then(response => {setMovies([...response.data]); setLoad(false)});
+        promise.then(response => { setMovies([...response.data]); setLoad(false) });
     }), []);
 
     return (
         <>
             <Text>Selecione o filme</Text>
-            {load ? <Loading /> : 
             <UL>
-                {movies.map((movie, index) =>
-                    <Link key={index} to={{ pathname:`/sessoes/${movie.id}` }}>
-                        <LI key={index}><img src={movie.posterURL} alt="" /></LI>
-                    </Link>
-                )}
-            </UL>}
+                {load ? <Loading /> : <>
+                    {movies.map((movie, index) =>
+                        <Link key={index} to={{ pathname: `/sessoes/${movie.id}` }}>
+                            <LI key={index}><img src={movie.posterURL} alt="" /></LI>
+                        </Link>
+                    )}
+                </>
+                }
+            </UL>
         </>
 
     );

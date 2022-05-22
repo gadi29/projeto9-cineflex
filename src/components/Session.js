@@ -35,7 +35,7 @@ function Session({ setTurnBack, turnBack }) {
             setMovie(response.data);
             setSessions([...response.data.days]);
         });
-    }), []);
+    }), [idFilme]);
 
     return (
         <Container>
