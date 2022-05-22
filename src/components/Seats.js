@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
-import Success from "./Success";
 import Footer from "./Footer";
 
-function Seat({ seat, setSelectedSeats, selectedSeats, index }) {
+function Seat({ seatName, setSeatName, seat, setSelectedSeats, selectedSeats, index }) {
     const [selecionado, setSelecionado] = useState(false);
 
     return (
@@ -17,10 +16,13 @@ function Seat({ seat, setSelectedSeats, selectedSeats, index }) {
                 else if (seat.isAvailable && !selecionado) {
                     setSelecionado(true);
                     setSelectedSeats([...selectedSeats, seat.id]);
+                    setSeatName([...seatName, seat.name]);
                 } else if (selecionado) {
                     setSelecionado(false);
                     const filterSeats = selectedSeats.filter(seatFilter => seatFilter !== seat.id);
                     setSelectedSeats([...filterSeats]);
+                    const filterName = seatName.filter(nameFilter => nameFilter !== seat.name);
+                    setSeatName([...filterName]);
                 }
             }}>{seat.name}</LI>
         </>
@@ -39,6 +41,7 @@ function Seats() {
     const [name, setName] = useState('');
     const [cpf, setCpf] = useState('');
     const [selectedSeats, setSelectedSeats] = useState([]);
+    const [seatName, setSeatName] = useState([]);
 
     useEffect((() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`);
@@ -68,7 +71,7 @@ function Seats() {
         const promise = axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', body);
     
         promise.then(() => {
-            navigate('/sucesso', { state: { movie: movie.title, day: day.weekday, hour: hour, name: name, cpf: cpf } });
+            navigate('/sucesso', { state: { movie: movie.title, day: day.weekday, hour: hour, seats:[...seatName], name: name, cpf: cpf } });
         });
     }
 
@@ -77,7 +80,7 @@ function Seats() {
             <TextH2>Selecione o(s) assento(s)</TextH2>
             {load ? <Loading /> : 
             <UL>
-                {seats.map((seat, index) => <Seat index={index} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} seat={seat} />)}
+                {seats.map((seat, index) => <Seat seatName={seatName} setSeatName={setSeatName} index={index} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} seat={seat} />)}
             </UL>}
             <ULlegenda>
                 <DivLegenda>
@@ -180,7 +183,7 @@ const Container = styled.div`
     form {
         margin: 0 24px;
         margin-top: 38px;
-        margin-bottom: 110px;
+        margin-bottom: 150px;
 
         display: flex;
         flex-direction: column;

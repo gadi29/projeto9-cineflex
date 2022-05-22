@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
  
 function Success() {
     const { state } = useLocation();
+    const seats = [...state.seats];
     let CPF = state.cpf.split(/[.-]+/);
     CPF = CPF.join('');
     let CPFfinal = CPF.match(/.{1,3}/g).join(".").replace(/\.(?=[^.]*$)/,"-");
@@ -15,8 +16,7 @@ function Success() {
             <TextH4>{state.movie}</TextH4>
             <TextH4>{state.day} - {state.hour}</TextH4>
             <TextH3>Ingressos</TextH3>
-            <TextH4>Assento 15</TextH4>
-            <TextH4>Assento 16</TextH4>
+            {seats.map(seat => <TextH4>Assento {seat}</TextH4>)}
             <TextH3>Comprador</TextH3>
             <TextH4>Nome: {state.name}</TextH4>
             <TextH4>CPF: {CPFfinal}</TextH4>
@@ -75,6 +75,7 @@ const Div = styled.div`
         width: 225px;
         height: 42px;
         margin-top: 65px;
+        margin-bottom: 40px;
 
         font-size: 18px;
         color: #FFFFFF;
