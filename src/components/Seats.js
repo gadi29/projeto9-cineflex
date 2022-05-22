@@ -98,7 +98,9 @@ function Seats() {
                 <input id="comprador" value={name} type="text" maxLength={'30'} minLength={'3'} onChange={(event) => setName(event.target.value)} placeholder="Digite seu nome..." required/>
                 <label htmlFor="cpf">CPF do comprador:</label>
                 <input id="cpf" value={cpf} type="text" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" onChange={(event) => setCpf(event.target.value)} placeholder="Digite seu CPF..." required/>
-                <button type="submit">Reservar assento(s)</button>
+                <DivButton>
+                    <button type="submit">Reservar assento(s)</button>
+                </DivButton>
             </form>
             <Footer day={day} movie={movie} hour={hour} />
         </Container>
@@ -183,8 +185,6 @@ const Container = styled.div`
         display: flex;
         flex-direction: column;
 
-        position: relative;
-
         label {
             font-size: 18px;
             color: #293845;
@@ -217,17 +217,16 @@ const Container = styled.div`
             
             width: 225px;
             height: 42px;
-            margin-top: 32px;
-            margin-bottom: 110px;
-
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+            margin-top: 10px;
 
             font-size: 18px;
             color: #FFFFFF;
         }
     }
+`;
+
+const DivButton = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
