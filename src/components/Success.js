@@ -1,19 +1,25 @@
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
+import { useLocation } from "react-router-dom";
+ 
+function Success() {
+    const { state } = useLocation();
+    let CPF = state.cpf.split(/[.-]+/);
+    CPF = CPF.join('');
+    let CPFfinal = CPF.match(/.{1,3}/g).join(".").replace(/\.(?=[^.]*$)/,"-");
 
-function Success({ movie, day, hour, selectedSeats, name, cpf }) {
     return (
         <>
             <TextH2>Pedido feito com sucesso!</TextH2>
             <TextH3>Filme e sessão</TextH3>
-            <TextH4>Enola Holmes</TextH4>
-            <TextH4>24/06/2021 - 15:00</TextH4>
+            <TextH4>{state.movie}</TextH4>
+            <TextH4>{state.day} - {state.hour}</TextH4>
             <TextH3>Ingressos</TextH3>
             <TextH4>Assento 15</TextH4>
             <TextH4>Assento 16</TextH4>
             <TextH3>Comprador</TextH3>
-            <TextH4>Nome: José da Silva</TextH4>
-            <TextH4>CPF: 123.456.789-10</TextH4>
+            <TextH4>Nome: {state.name}</TextH4>
+            <TextH4>CPF: {CPFfinal}</TextH4>
             <Div>
                 <Link to={'/'}>
                     <button>Voltar para Home</button>

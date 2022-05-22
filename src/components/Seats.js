@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
+import Success from "./Success";
 import Footer from "./Footer";
 
 function Seat({ seat, setSelectedSeats, selectedSeats, index }) {
@@ -28,6 +30,7 @@ function Seat({ seat, setSelectedSeats, selectedSeats, index }) {
 function Seats() {
 
     const { idSessao } = useParams();
+    const navigate = useNavigate();
     const [load, setLoad] = useState(true);
     const [seats, setSeats] = useState([]);
     const [day, setDay] = useState({});
@@ -64,6 +67,9 @@ function Seats() {
 
         const promise = axios.post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', body);
     
+        promise.then(() => {
+            navigate('/sucesso', { state: { movie: movie.title, day: day.weekday, hour: hour, name: name, cpf: cpf } });
+        });
     }
 
     return (
@@ -172,6 +178,7 @@ const Container = styled.div`
     form {
         margin: 0 24px;
         margin-top: 38px;
+        margin-bottom: 110px;
 
         display: flex;
         flex-direction: column;
