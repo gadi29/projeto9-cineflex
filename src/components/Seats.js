@@ -218,6 +218,7 @@ const Container = styled.div`
             width: 225px;
             height: 42px;
             margin-top: 32px;
+            margin-bottom: 110px;
 
             position: absolute;
             top: 100%;
